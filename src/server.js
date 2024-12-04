@@ -10,14 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middlewaree
-const corsOptions = {
-  origin: 'https://elgoatdelcode.github.io', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, 
-};
-
-app.use(cors(corsOptions));
+app.use(cors);
 app.use(express.json());
 
 
