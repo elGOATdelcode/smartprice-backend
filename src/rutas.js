@@ -4,7 +4,7 @@ const router = express.Router();
 const usuariosController = require('./controllers/usuariosController');
 const productosController = require('./controllers/productosController');
 const listasController = require('./controllers/listasController');
-const itemsListaController = require('./controllers/itemslistaController');
+const itemslistaController = require('./controllers/itemslistaController');
 const autenticarToken = require('./middlewares/auth');
 
 // Rutas de Usuarios
@@ -22,9 +22,9 @@ router.put('/api/listas/:id', autenticarToken, listasController.actualizarLista)
 router.delete('/api/listas/:id', autenticarToken, listasController.eliminarLista);
 
 // Rutas de Items de Lista (Protegidas)
-router.post('/api/items', autenticarToken, itemsListaController.agregarItem);
-router.get('/api/items/:lista_id', autenticarToken, itemsListaController.obtenerItems);
-router.put('/api/items/:id', autenticarToken, itemsListaController.actualizarItem);
-router.delete('/api/items/:id', autenticarToken, itemsListaController.eliminarItem);
+router.post('/api/items', autenticarToken, itemslistaController.agregarItem);
+router.get('/api/items/:lista_id', autenticarToken, itemslistaController.obtenerItems);
+router.put('/api/items/:id', autenticarToken, itemslistaController.actualizarItem);
+router.delete('/api/items/:id', autenticarToken, itemslistaController.eliminarItem);
 
 module.exports = router;
