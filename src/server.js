@@ -7,16 +7,10 @@ const rutas = require('./rutas');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
-const corsOptions = {
-  origin: 'https://elgoatdelcode.github.io', 
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, 
-  optionsSuccessStatus: 204
-};
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 
