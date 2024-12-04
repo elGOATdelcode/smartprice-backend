@@ -11,10 +11,10 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 const corsOptions = {
-  origin: 'https://elgoatdelcode.github.io/smartprice-frontend/', // Reemplaza con la URL de tu frontend
+  origin: 'https://elgoatdelcode.github.io/smartprice-frontend/', 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // Si necesitas enviar cookies o autenticación
+  credentials: true, 
 };
 
 app.use(cors(corsOptions));
