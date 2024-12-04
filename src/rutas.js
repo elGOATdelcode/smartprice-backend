@@ -4,7 +4,7 @@ const router = express.Router();
 const usuariosController = require('./controllers/usuariosController');
 const productosController = require('./controllers/productosController');
 const listasController = require('./controllers/listasController');
-const itemsListaController = require('./controllers/itemsListaController');
+const itemsListaController = require('./controllers/itemslistaController');
 const autenticarToken = require('./middlewares/auth');
 
 // Rutas de Usuarios
