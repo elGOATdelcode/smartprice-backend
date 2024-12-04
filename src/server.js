@@ -9,8 +9,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
-
-app.use(cors());
+const corsOptions = {
+  origin: 'https://elgoatdelcode.github.io',  
+  credentials: true,  
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 
