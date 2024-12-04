@@ -9,8 +9,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewaree
-app.use(cors());
+const corsOptions = {
+  origin: 'https://elgoatdelcode.github.io', 
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, 
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 
