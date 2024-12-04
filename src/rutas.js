@@ -7,6 +7,7 @@ const listasController = require('./controllers/listasController');
 const itemslistaController = require('./controllers/itemslistaController');
 const autenticarToken = require('./middlewares/auth');
 
+//
 // Rutas de Usuarios
 router.post('/api/usuarios/registro', usuariosController.registrarUsuario);
 router.post('/api/usuarios/login', usuariosController.iniciarSesion);
