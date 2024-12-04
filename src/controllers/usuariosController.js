@@ -1,7 +1,7 @@
-
 const db = require('../models/db');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt'); 
 
 dotenv.config();
 
@@ -13,25 +13,28 @@ const registrarUsuario = async (req, res) => {
   }
 
   try {
-    // Verificar si el usuario ya existe
+   
     const [usuarios] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
     if (usuarios.length > 0) {
       return res.status(400).json({ mensaje: 'El email ya está registrado' });
     }
 
-    // Insertar nuevo usuario
+   
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(contrasena, saltRounds);
+
+   
     const [resultado] = await db.query(
       'INSERT INTO usuarios (nombre_usuario, email, contrasena) VALUES (?, ?, ?)',
-      [nombre_usuario, email, contrasena]
+      [nombre_usuario, email, hashedPassword]
     );
 
     res.status(201).json({ mensaje: 'Usuario registrado exitosamente' });
   } catch (error) {
-    console.error(error);
+    console.error('Error en registrarUsuario:', error);
     res.status(500).json({ mensaje: 'Error en el servidor' });
   }
 };
-
 
 const iniciarSesion = async (req, res) => {
   const { email, contrasena } = req.body;
@@ -49,8 +52,9 @@ const iniciarSesion = async (req, res) => {
 
     const usuario = usuarios[0];
 
-    // Verificar la contraseña (falta hashing)
-    if (contrasena !== usuario.contrasena) {
+   
+    const esContraseñaValida = await bcrypt.compare(contrasena, usuario.contrasena);
+    if (!esContraseñaValida) {
       return res.status(400).json({ mensaje: 'Credenciales inválidas' });
     }
 
@@ -63,7 +67,7 @@ const iniciarSesion = async (req, res) => {
 
     res.json({ token });
   } catch (error) {
-    console.error(error);
+    console.error('Error en iniciarSesion:', error);
     res.status(500).json({ mensaje: 'Error en el servidor' });
   }
 };
