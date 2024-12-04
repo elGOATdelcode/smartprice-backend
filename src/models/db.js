@@ -3,20 +3,15 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  connectTimeout: 10000,  
+  connectionLimit: 10,  
+  waitForConnections: true,
+  queueLimit: 0,
+  connectTimeout: 15000,  
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Error de conexión:', err);
-  } else {
-    console.log('Conexión exitosa');
-  }
-});
-
-module.exports = connection.promise(); 
+module.exports = pool.promise();
