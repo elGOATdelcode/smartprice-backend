@@ -43,7 +43,6 @@ const agregarItem = async (req, res) => {
   }
 };
 
-// Obtener todos los items de una lista
 const obtenerItems = async (req, res) => {
   const { lista_id } = req.params;
   const usuario_id = req.usuario.id;
@@ -70,7 +69,7 @@ const obtenerItems = async (req, res) => {
   }
 };
 
-// Actualizar la cantidad de un item en la lista
+
 const actualizarItem = async (req, res) => {
   const { id } = req.params; 
   const { cantidad } = req.body;
@@ -102,7 +101,7 @@ const actualizarItem = async (req, res) => {
   }
 };
 
-// Eliminar un item de la lista
+
 const eliminarItem = async (req, res) => {
   const { id } = req.params; 
   const usuario_id = req.usuario.id;
@@ -135,5 +134,6 @@ module.exports = {
   actualizarItem,
   eliminarItem
 };
+
 
 

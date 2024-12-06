@@ -1,6 +1,5 @@
 const db = require('../models/db');
 
-// Crear una nueva lista
 const crearLista = async (req, res) => {
   const { nombre } = req.body;
   const usuario_id = req.usuario.id;
@@ -22,7 +21,6 @@ const crearLista = async (req, res) => {
   }
 };
 
-// Obtener todas las listas del usuario
 const obtenerListas = async (req, res) => {
   const usuario_id = req.usuario.id;
 
@@ -35,7 +33,6 @@ const obtenerListas = async (req, res) => {
   }
 };
 
-// Actualizar el nombre de una lista
 const actualizarLista = async (req, res) => {
   const { id } = req.params;
   const { nombre } = req.body;
@@ -60,7 +57,7 @@ const actualizarLista = async (req, res) => {
   }
 };
 
-// Eliminar una lista
+
 const eliminarLista = async (req, res) => {
   const { id } = req.params;
   const usuario_id = req.usuario.id;
@@ -89,3 +86,4 @@ module.exports = {
   actualizarLista,
   eliminarLista
 };
+
