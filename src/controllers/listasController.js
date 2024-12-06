@@ -1,4 +1,3 @@
-
 const db = require('../models/db');
 
 // Crear una nueva lista

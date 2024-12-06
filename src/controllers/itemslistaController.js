@@ -15,13 +15,28 @@ const agregarItem = async (req, res) => {
       return res.status(404).json({ mensaje: 'Lista no encontrada' });
     }
 
-    // Insertar el item en la lista
-    await db.query(
-      'INSERT INTO items_lista (lista_id, producto_id, cantidad) VALUES (?, ?, ?)',
-      [lista_id, producto_id, cantidad]
+    // Verificar si el producto ya existe en la lista
+    const [existingItems] = await db.query(
+      'SELECT * FROM items_lista WHERE lista_id = ? AND producto_id = ?',
+      [lista_id, producto_id]
     );
 
-    res.status(201).json({ mensaje: 'Producto agregado a la lista' });
+    if (existingItems.length > 0) {
+      // Actualizar la cantidad existente
+      const newCantidad = existingItems[0].cantidad + cantidad;
+      await db.query(
+        'UPDATE items_lista SET cantidad = ? WHERE id = ?',
+        [newCantidad, existingItems[0].id]
+      );
+      res.json({ mensaje: 'Cantidad actualizada en la lista', itemId: existingItems[0].id });
+    } else {
+      // Insertar el nuevo item en la lista
+      const [resultado] = await db.query(
+        'INSERT INTO items_lista (lista_id, producto_id, cantidad) VALUES (?, ?, ?)',
+        [lista_id, producto_id, cantidad]
+      );
+      res.status(201).json({ mensaje: 'Producto agregado a la lista', itemId: resultado.insertId });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ mensaje: 'Error en el servidor' });
@@ -120,4 +135,5 @@ module.exports = {
   actualizarItem,
   eliminarItem
 };
+
 
