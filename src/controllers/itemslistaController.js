@@ -1,4 +1,3 @@
-
 const db = require('../models/db');
 
 // Agregar un producto a una lista
@@ -11,7 +10,6 @@ const agregarItem = async (req, res) => {
   }
 
   try {
-   
     const [listas] = await db.query('SELECT * FROM listas WHERE id = ? AND usuario_id = ?', [lista_id, usuario_id]);
     if (listas.length === 0) {
       return res.status(404).json({ mensaje: 'Lista no encontrada' });
@@ -36,7 +34,6 @@ const obtenerItems = async (req, res) => {
   const usuario_id = req.usuario.id;
 
   try {
-  
     const [listas] = await db.query('SELECT * FROM listas WHERE id = ? AND usuario_id = ?', [lista_id, usuario_id]);
     if (listas.length === 0) {
       return res.status(404).json({ mensaje: 'Lista no encontrada' });
@@ -90,7 +87,7 @@ const actualizarItem = async (req, res) => {
   }
 };
 
-
+// Eliminar un item de la lista
 const eliminarItem = async (req, res) => {
   const { id } = req.params; 
   const usuario_id = req.usuario.id;
@@ -108,7 +105,7 @@ const eliminarItem = async (req, res) => {
       return res.status(404).json({ mensaje: 'Item no encontrado' });
     }
 
-   
+    // Eliminar el item
     await db.query('DELETE FROM items_lista WHERE id = ?', [id]);
     res.json({ mensaje: 'Item eliminado exitosamente' });
   } catch (error) {
@@ -123,3 +120,4 @@ module.exports = {
   actualizarItem,
   eliminarItem
 };
+

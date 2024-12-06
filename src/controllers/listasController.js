@@ -1,7 +1,7 @@
 
 const db = require('../models/db');
 
-
+// Crear una nueva lista
 const crearLista = async (req, res) => {
   const { nombre } = req.body;
   const usuario_id = req.usuario.id;
@@ -23,7 +23,7 @@ const crearLista = async (req, res) => {
   }
 };
 
-
+// Obtener todas las listas del usuario
 const obtenerListas = async (req, res) => {
   const usuario_id = req.usuario.id;
 
@@ -47,7 +47,6 @@ const actualizarLista = async (req, res) => {
   }
 
   try {
-  
     const [listas] = await db.query('SELECT * FROM listas WHERE id = ? AND usuario_id = ?', [id, usuario_id]);
     if (listas.length === 0) {
       return res.status(404).json({ mensaje: 'Lista no encontrada' });
@@ -62,17 +61,19 @@ const actualizarLista = async (req, res) => {
   }
 };
 
-
+// Eliminar una lista
 const eliminarLista = async (req, res) => {
   const { id } = req.params;
   const usuario_id = req.usuario.id;
 
   try {
-   
     const [listas] = await db.query('SELECT * FROM listas WHERE id = ? AND usuario_id = ?', [id, usuario_id]);
     if (listas.length === 0) {
       return res.status(404).json({ mensaje: 'Lista no encontrada' });
     }
+
+    // Eliminar los items asociados a la lista primero (para mantener la integridad referencial)
+    await db.query('DELETE FROM items_lista WHERE lista_id = ?', [id]);
 
     // Eliminar la lista
     await db.query('DELETE FROM listas WHERE id = ?', [id]);

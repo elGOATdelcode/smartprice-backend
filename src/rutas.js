@@ -7,7 +7,6 @@ const listasController = require('./controllers/listasController');
 const itemslistaController = require('./controllers/itemslistaController');
 const autenticarToken = require('./middlewares/auth');
 
-//
 // Rutas de Usuarios
 router.post('/api/usuarios/registro', usuariosController.registrarUsuario);
 router.post('/api/usuarios/login', usuariosController.iniciarSesion);
@@ -29,3 +28,4 @@ router.put('/api/items/:id', autenticarToken, itemslistaController.actualizarIte
 router.delete('/api/items/:id', autenticarToken, itemslistaController.eliminarItem);
 
 module.exports = router;
+
